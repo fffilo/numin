@@ -57,7 +57,7 @@
 			keybind: true,
 			touch: true,
 			parent: null,
-			template: '<div class="input-group numin-wrapper"><span class="input-group-btn numin-btn-wrapper"><button class="btn btn-default numin-trigger-decrease" type="button">-</button></span><element /><span class="input-group-btn numin-btn-wrapper"><button class="btn btn-default numin-trigger-increase" type="button">+</button></span></div>'
+			template: '<div class="input-group numin-wrapper"><span class="input-group-btn numin-btn-wrapper"><button class="btn btn-default numin-trigger-decrease" type="button" tabindex="-1">-</button></span><element /><span class="input-group-btn numin-btn-wrapper"><button class="btn btn-default numin-trigger-increase" type="button" tabindex="-1">+</button></span></div>'
 		},
 
 		/**
