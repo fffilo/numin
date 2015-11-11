@@ -3,7 +3,7 @@
  	"use strict";
 
 	/**
-	 * NumIn plugin
+	 * Numeric Input plugin
 	 * @param  {Object} element HTML/jQuery element
 	 * @param  {Object} options (see Plugin.prototype.defaults object)
 	 * @return {Void}
@@ -38,13 +38,13 @@
 	}
 
 	/**
-	 * NumIn plugin prototype
+	 * Numeric Input plugin prototype
 	 * @type {Object}
 	 */
 	Plugin.prototype = {
 
 		/**
-		 * NumIn plugin default options
+		 * Numeric Input plugin default options
 		 * @type {Object}
 		 */
 		defaults: {
@@ -504,7 +504,7 @@
 	}
 
 	/**
-	 * jQuery NumIn plugin
+	 * jQuery Numeric Input plugin
 	 * @param  {Object} options (see Plugin.prototype.defaults object)
 	 * @return {Object}         jQuery collection
 	 */
@@ -533,7 +533,7 @@
 	 */
 	window.numin = Plugin;
 
-	// autoiniti
+	// autoinit
 	$(document).ready(function(e) {
 		$("[data-numin-autoinit]").numin();
 	});
