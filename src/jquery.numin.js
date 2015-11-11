@@ -285,7 +285,10 @@
 			if ( ! this._validate_step()) return;
 
 			// set value
-			this.options.value = this.$element.val();
+			if (this.options.value != this.$element.val()) {
+				this.options.value = this.$element.val();
+				this.$element.trigger("change");
+			}
 
 			// disable buttons
 			this._disable(this.$decrease, this.options.min !== undefined && this.$element.val()*1 <= this.options.min);
