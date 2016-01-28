@@ -63,11 +63,12 @@
 			min: null,
 			max: null,
 			step: 1,
+			stepBig: null,
 			decimals: "",
 			decimalSeparator: ".",
 			thousandSeparator: "",
 			format: "{val}",
-			keybind: true,
+			keyBind: true,
 			touch: true,
 			template: '<div class="input-group numin-wrapper"><span class="input-group-btn numin-btn-wrapper"><button class="btn btn-default numin-trigger-decrease" type="button">-</button></span><input class="numin numin-clone form-control" type="text" value="" /><span class="input-group-btn numin-btn-wrapper"><button class="btn btn-default numin-trigger-increase" type="button">+</button></span></div>'
 		},
@@ -106,11 +107,12 @@
 			this.min(this.options.min);
 			this.max(this.options.max);
 			this.step(this.options.step);
+			this.stepBig(this.options.stepBig);
 			this.decimals(this.options.decimals);
 			this.decimalSeparator(this.options.decimalSeparator);
 			this.thousandSeparator(this.options.thousandSeparator);
 			this.format(this.options.format);
-			this.keybind(this.options.keybind);
+			this.keyBind(this.options.keyBind);
 			this.options.touch = !! this.options.touch;
 		},
 
@@ -239,7 +241,7 @@
 		 * @return {Void}
 		 */
 		_handleKeydown: function(o,e) {
-			if (this.options.keybind) {
+			if (this.options.keyBind) {
 				if      (e.which == 38 && ! e.altKey &&  ! e.ctrlKey) this._handleIncreaseClick();
 				else if (e.which == 38 && ! e.altKey && !! e.ctrlKey) this._handleMaxifyClick();
 				else if (e.which == 40 && ! e.altKey &&  ! e.ctrlKey) this._handleDecreaseClick();
@@ -514,6 +516,29 @@
 		},
 
 		/**
+		 * Get/set this.option.stepBig
+		 * @param  {Mixed} val
+		 * @return {Mixed}
+		 */
+		stepBig: function(val) {
+			if (val === undefined) {
+				return this.options.max;
+			}
+
+			// reset
+			if (val === null) {
+				this.options.stepBig = val;
+			}
+
+			// validate
+			val = parseFloat(val);
+			if (isNaN(val) || val == 0) return;
+
+			// set
+			this.options.stepBig = val;
+		},
+
+		/**
 		 * Get/set this.option.decimals
 		 * @param  {Mixed} val
 		 * @return {Mixed}
@@ -591,16 +616,16 @@
 		},
 
 		/**
-		 * Get/set this.option.keybind
+		 * Get/set this.option.keyBind
 		 * @param  {Mixed} val
 		 * @return {Mixed}
 		 */
-		keybind: function(val) {
+		keyBind: function(val) {
 			if (val === undefined) {
-				return this.options.keybind;
+				return this.options.keyBind;
 			}
 
-			this.options.keybind = !! val;
+			this.options.keyBind = !! val;
 		},
 
 		/**
@@ -636,11 +661,31 @@
 		},
 
 		/**
+		 * Decrease element value
+		 * @return {Void}
+		 */
+		decreaseBig: function() {
+			if (this.options.stepBig) {
+				this.value(this.value() + this.options.stepBig*-1);
+			}
+		},
+
+		/**
 		 * Increase element value
 		 * @return {Void}
 		 */
 		increase: function() {
 			this.value(this.value() + this.options.step*1);
+		},
+
+		/**
+		 * Increase element value
+		 * @return {Void}
+		 */
+		increaseBig: function() {
+			if (this.options.stepBig) {
+				this.value(this.value() + this.options.stepBig*1);
+			}
 		}
 	}
 
