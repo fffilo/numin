@@ -133,11 +133,13 @@
 				.insertBefore(this.$element);
 
 			// html elements
-			this.$clone    = this.$parent.find(".numin-clone");
-			this.$minify   = this.$parent.find(".numin-trigger-minify");
-			this.$maxify   = this.$parent.find(".numin-trigger-maxify");
-			this.$increase = this.$parent.find(".numin-trigger-increase");
-			this.$decrease = this.$parent.find(".numin-trigger-decrease");
+			this.$clone       = this.$parent.find(".numin-clone");
+			this.$minify      = this.$parent.find(".numin-trigger-minify");
+			this.$maxify      = this.$parent.find(".numin-trigger-maxify");
+			this.$increase    = this.$parent.find(".numin-trigger-increase");
+			this.$increaseBig = this.$parent.find(".numin-trigger-increase-big");
+			this.$decrease    = this.$parent.find(".numin-trigger-decrease");
+			this.$decreaseBig = this.$parent.find(".numin-trigger-decrease-big");
 
 			// hide $element
 			this.$element
@@ -154,24 +156,28 @@
 			var that = this;
 
 			this.$minify
-				.on("click.numin", function(e) { that._handleMinifyClick.call(that, this, e); });
+				.on("click.numin",    function(e) { return that._handleMinifyClick.call(that, this, e); });
 			this.$maxify
-				.on("click.numin", function(e) { that._handleMaxifyClick.call(that, this, e); });
+				.on("click.numin",    function(e) { return that._handleMaxifyClick.call(that, this, e); });
 
 			this.$decrease
-				.on("click.numin", function(e) { that._handleDecreaseClick.call(that, this, e); });
+				.on("click.numin",    function(e) { return that._handleDecreaseClick.call(that, this, e); });
+			this.$decreaseBig
+				.on("click.numin",    function(e) { return that._handleDecreaseBigClick.call(that, this, e); });
 			this.$increase
-				.on("click.numin", function(e) { that._handleIncreaseClick.call(that, this, e); });
+				.on("click.numin",    function(e) { return that._handleIncreaseClick.call(that, this, e); });
+			this.$increaseBig
+				.on("click.numin",    function(e) { return that._handleIncreaseBigClick.call(that, this, e); });
 
 			this.$element
-				.on("focus.numin", function(e) { that._handleFocus.call(that, this, e); })
-				.on("keydown.numin" , function(e) { that._handleKeydown.call(that, this, e); })
-				.on("change.numin", function(e) { that._handleElementChange.call(that, this, e); });
+				.on("focus.numin",    function(e) { return that._handleFocus.call(that, this, e); })
+				.on("keydown.numin" , function(e) { return that._handleKeydown.call(that, this, e); })
+				.on("change.numin",   function(e) { return that._handleElementChange.call(that, this, e); });
 
 			this.$clone
-				.on("focus.numin", function(e) { that._handleFocus.call(that, this, e); })
-				.on("keydown.numin" , function(e) { that._handleKeydown.call(that, this, e); })
-				.on("change.numin", function(e) { that._handleCloneChange.call(that, this, e); });
+				.on("focus.numin",    function(e) { return that._handleFocus.call(that, this, e); })
+				.on("keydown.numin" , function(e) { return that._handleKeydown.call(that, this, e); })
+				.on("change.numin",   function(e) { return that._handleCloneChange.call(that, this, e); });
 		},
 
 		/**
@@ -214,6 +220,19 @@
 		},
 
 		/**
+		 * Handle decreaseBig click
+		 * @param  {Object}  o this object
+		 * @param  {Object}  e event object
+		 * @return {Boolean}
+		 */
+		_handleDecreaseBigClick: function(o,e) {
+			this.decreaseBig();
+			this.$clone.focus();
+
+			return false;
+		},
+
+		/**
 		 * Handle increase click
 		 * @param  {Object}  o this object
 		 * @param  {Object}  e event object
@@ -221,6 +240,19 @@
 		 */
 		_handleIncreaseClick: function(o,e) {
 			this.increase();
+			this.$clone.focus();
+
+			return false;
+		},
+
+		/**
+		 * Handle increaseBig click
+		 * @param  {Object}  o this object
+		 * @param  {Object}  e event object
+		 * @return {Boolean}
+		 */
+		_handleIncreaseBigClick: function(o,e) {
+			this.increaseBig();
 			this.$clone.focus();
 
 			return false;
@@ -244,10 +276,13 @@
 		 */
 		_handleKeydown: function(o,e) {
 			if (this.options.keyBind) {
-				if      (e.which == 38 && ! e.altKey &&  ! e.ctrlKey) this._handleIncreaseClick();
-				else if (e.which == 38 && ! e.altKey && !! e.ctrlKey) this._handleMaxifyClick();
-				else if (e.which == 40 && ! e.altKey &&  ! e.ctrlKey) this._handleDecreaseClick();
-				else if (e.which == 40 && ! e.altKey && !! e.ctrlKey) this._handleMinifyClick();
+				// e.which -> 38 up, 40 down, 33 pgup, 34 pgdown, 36 home, 35 end
+				if      (e.which == 38 && ! e.altKey &&  ! e.ctrlKey && ! e.shiftKey) return this._handleIncreaseClick();
+				else if (e.which == 40 && ! e.altKey &&  ! e.ctrlKey && ! e.shiftKey) return this._handleDecreaseClick();
+				else if (e.which == 33 && ! e.altKey &&  ! e.ctrlKey && ! e.shiftKey) return this._handleIncreaseBigClick();
+				else if (e.which == 34 && ! e.altKey &&  ! e.ctrlKey && ! e.shiftKey) return this._handleDecreaseBigClick();
+				else if (e.which == 35 && ! e.altKey && !! e.ctrlKey && ! e.shiftKey) return this._handleMaxifyClick();
+				else if (e.which == 36 && ! e.altKey && !! e.ctrlKey && ! e.shiftKey) return this._handleMinifyClick();
 			}
 		},
 
