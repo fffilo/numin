@@ -69,7 +69,7 @@
 			format: "{val}",
 			keybind: true,
 			touch: true,
-			template: '<div class="input-group numin-wrapper"><span class="input-group-btn numin-btn-wrapper"><button class="btn btn-default numin-trigger-decrease" type="button">-</button></span><input class="numin numin-clone" type="text" value="" /><span class="input-group-btn numin-btn-wrapper"><button class="btn btn-default numin-trigger-increase" type="button">+</button></span></div>'
+			template: '<div class="input-group numin-wrapper"><span class="input-group-btn numin-btn-wrapper"><button class="btn btn-default numin-trigger-decrease" type="button">-</button></span><input class="numin numin-clone form-control" type="text" value="" /><span class="input-group-btn numin-btn-wrapper"><button class="btn btn-default numin-trigger-increase" type="button">+</button></span></div>'
 		},
 
 		/**
