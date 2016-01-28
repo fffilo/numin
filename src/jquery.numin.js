@@ -87,8 +87,10 @@
 
 			// inherit from element data attributes
 			for (var key in this._defaults) {
-				if (this.options[key] === undefined && this.$element.attr("data-numin-" + key) !== undefined) {
-					this.options[key] = this.$element.attr("data-numin-" + key);
+				var akey = "data-numin-" + key.replace(/[A-Z]/g, function(m) { return "-" + m.toLowerCase(); });
+
+				if (this.options[key] === undefined && this.$element.attr(akey) !== undefined) {
+					this.options[key] = this.$element.attr(akey);
 				}
 			}
 
